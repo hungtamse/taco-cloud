@@ -15,6 +15,7 @@ import org.springframework.validation.Errors;
 
 import lombok.extern.slf4j.Slf4j;
 import tacos.Ingredient;
+import tacos.Order;
 import tacos.Taco;
 import tacos.data.JdbcIngredientRepository;
 import tacos.data.TacoRepository;
@@ -31,6 +32,11 @@ public class DesignTacoController1 {
     public DesignTacoController1(JdbcIngredientRepository ingredientRepository, TacoRepository tacoRepository){
         this.ingredientRepository = ingredientRepository;
         this.designRepo = tacoRepository;
+    }
+
+    @ModelAttribute
+    public Order order(){
+        return new Order();
     }
 
     @GetMapping
@@ -58,8 +64,18 @@ public class DesignTacoController1 {
     }
 
     @PostMapping
-    public String processDesign(@Valid @ModelAttribute("design") Taco design, Errors errors, Model model) {
-        log.info("Processing design: " + design);
+    public String processDesign(@Valid Taco design, Errors errors, @ModelAttribute Order order) {
+        System.out.println(errors);
+//        IngredientByIdConverter converter = new IngredientByIdConverter(this.ingredientRepository);
+//        for(Ingredient ingredient: design.getIngredients()){
+//            converter.convert(design.getName());
+//            System.out.println(ingredient.getName());
+//        }
+        if (errors.hasErrors()){
+            return "design";
+        }
+        Taco saved = designRepo.save(design);
+        order.addDesign(saved);
         return "redirect:/orders/current";
     }
 
