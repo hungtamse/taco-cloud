@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import tacos.Ingredient;
 import tacos.Order;
 import tacos.Taco;
-import tacos.data.JdbcIngredientRepository;
+import tacos.data.IngredientRepository;
 import tacos.data.TacoRepository;
 
 @Slf4j
@@ -25,11 +25,11 @@ import tacos.data.TacoRepository;
 @RequestMapping("/design")
 @SessionAttributes("order")
 public class DesignTacoController1 {
-    private final JdbcIngredientRepository ingredientRepository;
+    private final IngredientRepository ingredientRepository;
     private TacoRepository designRepo;
 
     @Autowired
-    public DesignTacoController1(JdbcIngredientRepository ingredientRepository, TacoRepository tacoRepository){
+    public DesignTacoController1(IngredientRepository ingredientRepository, TacoRepository tacoRepository){
         this.ingredientRepository = ingredientRepository;
         this.designRepo = tacoRepository;
     }
