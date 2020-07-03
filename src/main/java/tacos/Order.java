@@ -30,7 +30,7 @@ public class Order implements Serializable {
 	private String state;
 
 	@NotBlank(message="Zip is required")
-	private String zip;
+	private String deliveryZip;
 
 	@CreditCardNumber(message="Not a valid credit card number")
 	private String ccNumber;
